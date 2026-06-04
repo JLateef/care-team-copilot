@@ -14,7 +14,6 @@ type DraftState = 'idle' | 'loading' | 'ready';
 export default function DraftPanel({ patient, message, onSend }: Props) {
   const [state, setState] = useState<DraftState>('idle');
   const [draftText, setDraftText] = useState('');
-  const [isFallback, setIsFallback] = useState(false);
   const [tone, setTone] = useState<DraftTone>('Reassuring');
   const [sent, setSent] = useState(false);
 
@@ -23,7 +22,6 @@ export default function DraftPanel({ patient, message, onSend }: Props) {
     setDraftText('');
     const result = await generateDraft(patient, message, tone);
     setDraftText(result.draft);
-    setIsFallback(result.fallback);
     setState('ready');
   }
 
@@ -32,7 +30,6 @@ export default function DraftPanel({ patient, message, onSend }: Props) {
     setDraftText('');
     const result = await generateDraft(patient, message, tone);
     setDraftText(result.draft);
-    setIsFallback(result.fallback);
     setState('ready');
   }
 
@@ -65,7 +62,6 @@ export default function DraftPanel({ patient, message, onSend }: Props) {
                   setDraftText('');
                   const result = await generateDraft(patient, message, t);
                   setDraftText(result.draft);
-                  setIsFallback(result.fallback);
                   setState('ready');
                 }
               }}
